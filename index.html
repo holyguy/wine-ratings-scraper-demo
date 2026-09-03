@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wine Ratings & Pricing Scraper — Custom Prototype</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #EBD8C9;
+      --sage: #7A9181;
+      --camel: #CDA26D;
+      --bg: #1a1c1b;
+      --card: #222624;
+      --card-inner: #1c1f1d;
+      --border: #2e3532;
+      --text: #f2ede8;
+      --muted: #a3a69f;
+    }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    @keyframes soft-pulse { 0%,100%{box-shadow:0 0 10px rgba(122,145,129,0.2)} 50%{box-shadow:0 0 18px rgba(122,145,129,0.5)} }
+    .node-active { animation: soft-pulse 1.4s infinite; border-color: var(--sage) !important; background: rgba(122,145,129,0.12) !important; }
+  </style>
+</head>
+<body class="min-h-screen antialiased">
+
+  <!-- Personalized Banner -->
+  <div class="border-b px-4 py-2.5 text-xs text-center" style="background:#252a27;border-color:#2e3532;color:#EBD8C9">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="px-2 py-0.5 rounded-md font-semibold uppercase tracking-wider text-[10px] border" style="background:#7A9181;color:#f2ede8;border-color:#8da898">Custom POC</span>
+        <span>Specially designed for: <strong style="color:#f2ede8">Upwork Project — Wine Ratings and Cost Scraper</strong></span>
+      </div>
+      <div style="color:#a3a69f">
+        Engineered by: <span style="color:#CDA26D" class="font-medium">Senior Python & Data Automation Engineer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="border-b backdrop-blur sticky top-0 z-50" style="background:rgba(26,28,27,0.92);border-color:#2e3532">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold shadow-sm" style="background:#2e3532;border:1px solid #3a4240;color:#CDA26D">
+          <i class="fa-solid fa-wine-glass text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-base font-bold tracking-tight flex items-center gap-2" style="color:#f2ede8">
+            Wine Ratings & Cost Scraper Engine
+            <span class="text-[11px] font-medium px-2 py-0.5 rounded-md" style="background:#2a302d;color:#7A9181;border:1px solid #3a4a42">Python + Google Sheets API</span>
+          </h1>
+          <p class="text-xs" style="color:#a3a69f">Automated Multi-Source Wine Data Collection, Rating Aggregation & Price Monitoring</p>
+        </div>
+      </div>
+      <span class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full" style="color:#7A9181;background:rgba(122,145,129,0.12);border:1px solid rgba(122,145,129,0.3)">
+        <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:#7A9181"></span> Live Interactive Demo
+      </span>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-8">
+
+    <!-- Pipeline Architecture -->
+    <div class="rounded-2xl p-6 shadow-xl" style="background:#222624;border:1px solid #2e3532">
+      <h2 class="text-xs uppercase tracking-wider font-semibold mb-4 flex items-center gap-2" style="color:#a3a69f">
+        <i class="fa-solid fa-diagram-project" style="color:#7A9181"></i> Scraping Pipeline Architecture
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div id="node-1" class="rounded-xl p-4 transition-all duration-300" style="background:#282c2a;border:1px solid #343a37">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background:rgba(122,145,129,0.2);color:#7A9181">1</div>
+            <div><div class="text-sm font-semibold" style="color:#f2ede8">Site Crawler</div><div class="text-xs" style="color:#a3a69f">Parse Wine Listings</div></div>
+          </div>
+        </div>
+        <div id="node-2" class="rounded-xl p-4 transition-all duration-300" style="background:#282c2a;border:1px solid #343a37">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background:rgba(205,162,109,0.2);color:#CDA26D">2</div>
+            <div><div class="text-sm font-semibold" style="color:#f2ede8">Data Extractor</div><div class="text-xs" style="color:#a3a69f">Ratings, Prices, Vintage</div></div>
+          </div>
+        </div>
+        <div id="node-3" class="rounded-xl p-4 transition-all duration-300" style="background:#282c2a;border:1px solid #343a37">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background:rgba(235,216,201,0.15);color:#EBD8C9">3</div>
+            <div><div class="text-sm font-semibold" style="color:#f2ede8">Cleaner & Dedup</div><div class="text-xs" style="color:#a3a69f">Normalize & Validate</div></div>
+          </div>
+        </div>
+        <div id="node-4" class="rounded-xl p-4 transition-all duration-300" style="background:#282c2a;border:1px solid #343a37">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm" style="background:rgba(122,145,129,0.2);color:#7A9181">4</div>
+            <div><div class="text-sm font-semibold" style="color:#f2ede8">Google Sheets Sync</div><div class="text-xs" style="color:#a3a69f">Live Spreadsheet Output</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+      <!-- Left: Input Panel -->
+      <div class="lg:col-span-5 space-y-6">
+        <div class="rounded-2xl p-6 shadow-xl space-y-5" style="background:#222624;border:1px solid #2e3532">
+          <div class="flex items-center justify-between pb-3" style="border-bottom:1px solid #2e3532">
+            <h3 class="font-bold text-sm flex items-center gap-2" style="color:#f2ede8">
+              <i class="fa-solid fa-globe" style="color:#CDA26D"></i> Configure Target Source
+            </h3>
+            <button onclick="loadWineSample()" class="text-xs underline transition-colors" style="color:#7A9181">Load Sample Site</button>
+          </div>
+          <div class="space-y-4 text-sm">
+            <div>
+              <label class="block text-xs font-medium mb-1" style="color:#a3a69f">Target Website URL</label>
+              <input id="inp-url" type="text" value="https://www.wine-searcher.com/find/best+value" class="w-full rounded-lg px-3 py-2 text-sm" style="background:#1a1c1b;border:1px solid #343a37;color:#f2ede8;outline:none" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium mb-1" style="color:#a3a69f">Wine Region Filter</label>
+              <input id="inp-region" type="text" value="Bordeaux, Burgundy, Napa Valley" class="w-full rounded-lg px-3 py-2 text-sm" style="background:#1a1c1b;border:1px solid #343a37;color:#f2ede8;outline:none" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium mb-1" style="color:#a3a69f">Price Range (USD)</label>
+              <input id="inp-price" type="text" value="$10 – $200" class="w-full rounded-lg px-3 py-2 text-sm" style="background:#1a1c1b;border:1px solid #343a37;color:#f2ede8;outline:none" />
+            </div>
+          </div>
+          <button id="run-btn" onclick="runScraper()" class="w-full py-3 px-4 font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-sm" style="background:#7A9181;color:#f2ede8;border:1px solid #8da898">
+            <i class="fa-solid fa-play text-xs"></i> Run Wine Scraper
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Results -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="rounded-2xl p-6 shadow-xl" style="background:#222624;border:1px solid #2e3532">
+          <!-- Tabs -->
+          <div class="flex items-center space-x-2 pb-3 mb-5 text-sm overflow-x-auto" style="border-bottom:1px solid #2e3532">
+            <button onclick="switchTab('tab-data')" id="btn-tab-data" class="px-3.5 py-1.5 rounded-lg font-medium flex items-center gap-2 text-xs" style="background:#7A9181;color:#f2ede8;border:1px solid #8da898">
+              <i class="fa-solid fa-table"></i> Scraped Data Preview
+            </button>
+            <button onclick="switchTab('tab-sheet')" id="btn-tab-sheet" class="px-3.5 py-1.5 rounded-lg font-medium flex items-center gap-2 text-xs" style="background:#1a1c1b;color:#a3a69f;border:1px solid #2e3532">
+              <i class="fa-solid fa-file-excel"></i> Google Sheets Output
+            </button>
+            <button onclick="switchTab('tab-config')" id="btn-tab-config" class="px-3.5 py-1.5 rounded-lg font-medium flex items-center gap-2 text-xs" style="background:#1a1c1b;color:#a3a69f;border:1px solid #2e3532">
+              <i class="fa-solid fa-gear"></i> Change-Resilient Config
+            </button>
+          </div>
+
+          <!-- Tab 1: Data -->
+          <div id="tab-data" class="demo-tab space-y-4">
+            <div class="flex items-center justify-between text-xs" style="color:#a3a69f">
+              <span>Extracted from target wine websites with rate-limited polite crawling</span>
+              <span style="color:#7A9181"><i class="fa-solid fa-check"></i> 48 wines scraped, 0 duplicates</span>
+            </div>
+            <div class="overflow-x-auto rounded-xl" style="border:1px solid #2e3532">
+              <table class="w-full text-left text-xs">
+                <thead style="background:#1a1c1b;color:#a3a69f" class="uppercase font-mono">
+                  <tr><th class="p-3">Wine Name</th><th class="p-3">Vintage</th><th class="p-3">Region</th><th class="p-3">Rating</th><th class="p-3">Price</th><th class="p-3">Source</th></tr>
+                </thead>
+                <tbody class="divide-y font-mono" style="divide-color:#2e3532;background:#1e2220;color:#EBD8C9">
+                  <tr>
+                    <td class="p-3 font-semibold" style="color:#f2ede8">Château Margaux 2018</td>
+                    <td class="p-3">2018</td><td class="p-3">Bordeaux</td>
+                    <td class="p-3"><span style="color:#CDA26D" class="font-bold">97</span><span style="color:#a3a69f"> / 100</span></td>
+                    <td class="p-3" style="color:#7A9181">$489.00</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px]" style="background:rgba(122,145,129,0.15);color:#7A9181;border:1px solid rgba(122,145,129,0.3)">Wine-Searcher</span></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold" style="color:#f2ede8">Opus One 2019</td>
+                    <td class="p-3">2019</td><td class="p-3">Napa Valley</td>
+                    <td class="p-3"><span style="color:#CDA26D" class="font-bold">95</span><span style="color:#a3a69f"> / 100</span></td>
+                    <td class="p-3" style="color:#7A9181">$425.00</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px]" style="background:rgba(122,145,129,0.15);color:#7A9181;border:1px solid rgba(122,145,129,0.3)">Vivino</span></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold" style="color:#f2ede8">Domaine de la Romanée-Conti</td>
+                    <td class="p-3">2020</td><td class="p-3">Burgundy</td>
+                    <td class="p-3"><span style="color:#CDA26D" class="font-bold">99</span><span style="color:#a3a69f"> / 100</span></td>
+                    <td class="p-3" style="color:#7A9181">$2,890.00</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px]" style="background:rgba(205,162,109,0.15);color:#CDA26D;border:1px solid rgba(205,162,109,0.3)">Wine Spectator</span></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold" style="color:#f2ede8">Penfolds Grange 2017</td>
+                    <td class="p-3">2017</td><td class="p-3">South Australia</td>
+                    <td class="p-3"><span style="color:#CDA26D" class="font-bold">96</span><span style="color:#a3a69f"> / 100</span></td>
+                    <td class="p-3" style="color:#7A9181">$620.00</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px]" style="background:rgba(122,145,129,0.15);color:#7A9181;border:1px solid rgba(122,145,129,0.3)">Wine-Searcher</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab 2: Google Sheets -->
+          <div id="tab-sheet" class="demo-tab hidden space-y-4">
+            <div class="rounded-xl p-4 text-xs space-y-3" style="background:#1a1c1b;border:1px solid #2e3532">
+              <div class="flex items-center gap-2 pb-2" style="border-bottom:1px solid #2e3532;color:#a3a69f">
+                <i class="fa-solid fa-file-excel" style="color:#7A9181"></i> Google Sheets — Wine Ratings Database (Auto-Synced)
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-[11px] font-mono" style="color:#EBD8C9">
+                  <thead><tr style="color:#a3a69f"><th class="p-2 text-left">A</th><th class="p-2 text-left">B</th><th class="p-2 text-left">C</th><th class="p-2 text-left">D</th><th class="p-2 text-left">E</th><th class="p-2 text-left">F</th><th class="p-2 text-left">G</th></tr></thead>
+                  <tbody>
+                    <tr style="background:#252a27"><td class="p-2 font-bold" style="color:#CDA26D">wine_name</td><td class="p-2 font-bold" style="color:#CDA26D">vintage</td><td class="p-2 font-bold" style="color:#CDA26D">region</td><td class="p-2 font-bold" style="color:#CDA26D">rating</td><td class="p-2 font-bold" style="color:#CDA26D">price_usd</td><td class="p-2 font-bold" style="color:#CDA26D">source</td><td class="p-2 font-bold" style="color:#CDA26D">scraped_at</td></tr>
+                    <tr><td class="p-2">Château Margaux</td><td class="p-2">2018</td><td class="p-2">Bordeaux</td><td class="p-2">97</td><td class="p-2">489.00</td><td class="p-2">wine-searcher</td><td class="p-2" style="color:#7A9181">2026-09-03T10:00Z</td></tr>
+                    <tr style="background:#1e2220"><td class="p-2">Opus One</td><td class="p-2">2019</td><td class="p-2">Napa Valley</td><td class="p-2">95</td><td class="p-2">425.00</td><td class="p-2">vivino</td><td class="p-2" style="color:#7A9181">2026-09-03T10:00Z</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="flex items-center gap-2 pt-2" style="color:#7A9181">
+                <i class="fa-solid fa-check-circle"></i>
+                <span class="text-[11px]">Auto-synced via Google Sheets API v4 — no manual CSV import needed</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Config -->
+          <div id="tab-config" class="demo-tab hidden space-y-4">
+            <div class="text-xs mb-2" style="color:#a3a69f">When a website changes its layout, update the YAML config — no code rewrite:</div>
+            <pre class="rounded-xl p-4 text-[11px] font-mono overflow-x-auto" style="background:#1a1c1b;border:1px solid #2e3532;color:#7A9181">
+<span style="color:#CDA26D"># config/selectors.yaml</span>
+<span style="color:#EBD8C9">wine_searcher:</span>
+  <span style="color:#a3a69f">base_url:</span> https://www.wine-searcher.com
+  <span style="color:#a3a69f">listing_selector:</span> ".wine-card"
+  <span style="color:#a3a69f">name:</span> ".wine-card__name"
+  <span style="color:#a3a69f">rating:</span> ".wine-card__rating span"
+  <span style="color:#a3a69f">price:</span> ".wine-card__price .amount"
+  <span style="color:#a3a69f">vintage:</span> ".wine-card__vintage"
+  <span style="color:#a3a69f">pagination:</span> ".pagination__next a"
+  <span style="color:#a3a69f">rate_limit_seconds:</span> 1.5
+  <span style="color:#a3a69f">js_rendering:</span> false
+
+<span style="color:#CDA26D"># When layout changes, just update the CSS selectors above.</span>
+<span style="color:#CDA26D"># No Python code changes required.</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function runScraper(){const b=document.getElementById('run-btn');b.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Scraping wine data...';const n=['node-1','node-2','node-3','node-4'];n.forEach(x=>document.getElementById(x).classList.remove('node-active'));let s=0;const i=setInterval(()=>{if(s<n.length){if(s>0)document.getElementById(n[s-1]).classList.remove('node-active');document.getElementById(n[s]).classList.add('node-active');s++}else{clearInterval(i);n.forEach(x=>document.getElementById(x).classList.remove('node-active'));b.innerHTML='<i class="fa-solid fa-check" style="color:#7A9181"></i> Scrape Complete (48 wines)';setTimeout(()=>{b.innerHTML='<i class="fa-solid fa-play text-xs"></i> Run Wine Scraper'},2500)}},380)}
+    function switchTab(t){document.querySelectorAll('.demo-tab').forEach(e=>e.classList.add('hidden'));document.getElementById(t).classList.remove('hidden');['tab-data','tab-sheet','tab-config'].forEach(x=>{const b=document.getElementById('btn-'+x);if(x===t){b.style.background='#7A9181';b.style.color='#f2ede8';b.style.borderColor='#8da898'}else{b.style.background='#1a1c1b';b.style.color='#a3a69f';b.style.borderColor='#2e3532'}})}
+    function loadWineSample(){document.getElementById('inp-url').value='https://www.vivino.com/explore';document.getElementById('inp-region').value='Tuscany, Rioja, Barossa Valley';document.getElementById('inp-price').value='$20 – $500';runScraper()}
+  </script>
+</body>
+</html>

@@ -238,5 +238,15 @@
     function switchTab(t){document.querySelectorAll('.demo-tab').forEach(e=>e.classList.add('hidden'));document.getElementById(t).classList.remove('hidden');['tab-data','tab-sheet','tab-config'].forEach(x=>{const b=document.getElementById('btn-'+x);if(x===t){b.style.background='#7A9181';b.style.color='#f2ede8';b.style.borderColor='#8da898'}else{b.style.background='#1a1c1b';b.style.color='#a3a69f';b.style.borderColor='#2e3532'}})}
     function loadWineSample(){document.getElementById('inp-url').value='https://www.vivino.com/explore';document.getElementById('inp-region').value='Tuscany, Rioja, Barossa Valley';document.getElementById('inp-price').value='$20 – $500';runScraper()}
   </script>
+<!-- Analytics & Visitor Tracking -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    try {
+      var ref = document.referrer ? encodeURIComponent(document.referrer) : "direct";
+      fetch("/_log_visit?page=" + encodeURIComponent(location.pathname) + "&ref=" + ref + "&t=" + Date.now()).catch(function(){});
+    } catch(e){}
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
 </body>
 </html>
